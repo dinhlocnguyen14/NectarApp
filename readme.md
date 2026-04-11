@@ -54,31 +54,31 @@ Sau đó:
 
 ### 🔹 Splash Screen
 
-![Splash](./assets/demo/Splash.jpg)
+![Splash](./assets/demo/23810310244_Splash.jpg)
 
 ### 🔹 Onboarding
 
-![Onboarding](./assets/demo/Onboarding.jpg)
+![Onboarding](./assets/demo/23810310244_Onboarding.jpg)
 
 ### 🔹 Sign In
 
-![SignIn](./assets/demo/SignIn.jpg)
+![SignIn](./assets/demo/23810310244_SignIn.jpg)
 
 ### 🔹 Number
 
-![OTP](./assets/demo/Number.jpg)
+![OTP](./assets/demo/23810310244_Number.jpg)
 
 ### 🔹 Verification
 
-![Verification](./assets/demo/Verification.jpg)
+![Verification](./assets/demo/23810310244_Verification.jpg)
 
 ### 🔹 Location
 
-![Location](./assets/demo/SelectLocation.jpg)
+![Location](./assets/demo/23810310244_SelectLocation.jpg)
 
 ### 🔹 Sign Up
 
-## ![SignIn](./assets/demo/SignUp.jpg)
+## ![SignIn](./assets/demo/23810310244_SignUp.jpg)
 
 ## Video demo
 
