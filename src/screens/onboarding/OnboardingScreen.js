@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 export default function OnboardingScreen() {
+  const navigation = useNavigation();
   return (
     <ImageBackground
       source={require("../../../assets/images/bg.png")}
@@ -26,7 +27,10 @@ export default function OnboardingScreen() {
           Get your groceries in as fast as one hour
         </Text>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("SignIn")}
+        >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
 
   subtitle: {
     color: "#eee",
-    marginTop: 10,
+    marginTop: 60,
     marginBottom: 25,
     textAlign: "center",
   },
