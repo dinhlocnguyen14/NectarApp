@@ -6,9 +6,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 
 export default function SignInScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Image
@@ -19,35 +22,42 @@ export default function SignInScreen() {
 
       <View style={styles.content}>
         <Text style={styles.title}>Get your groceries{"\n"}with nectar</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("EnterPhone")}>
+          <View pointerEvents="none">
+            <View style={styles.inputRow}>
+              <Image
+                source={require("../../../assets/images/flag.png")}
+                style={styles.flag}
+              />
+              <Text style={styles.code}>+880</Text>
 
-        {/* Phone input */}
-        <View style={styles.inputRow}>
-          <Image
-            source={require("../../../assets/images/flag.png")}
-            style={styles.flag}
-          />
-          <Text style={styles.code}>+880</Text>
-          <TextInput
-            placeholder="Phone number"
-            style={styles.input}
-            keyboardType="phone-pad"
-            value={phone}
-            onChangeText={setPhone}
-          />
-        </View>
+              <TextInput
+                placeholder="Phone number"
+                style={styles.input}
+                editable={false}
+              />
+            </View>
 
-        <View style={styles.divider} />
+            <View style={styles.divider} />
+          </View>
+        </TouchableOpacity>
 
         <Text style={styles.orText}>Or connect with social media</Text>
 
-        {/* Google */}
+        {/* google */}
         <TouchableOpacity style={[styles.socialBtn, styles.google]}>
-          <Text style={styles.socialText}>Continue with Google</Text>
+          <View style={styles.row}>
+            <AntDesign name="google" size={20} color="#fff" />
+            <Text style={styles.socialText}>Continue with Google</Text>
+          </View>
         </TouchableOpacity>
 
-        {/* Facebook */}
+        {/* facebook */}
         <TouchableOpacity style={[styles.socialBtn, styles.facebook]}>
-          <Text style={styles.socialText}>Continue with Facebook</Text>
+          <View style={styles.row}>
+            <FontAwesome name="facebook" size={20} color="#fff" />
+            <Text style={styles.socialText}>Continue with Facebook</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -61,21 +71,18 @@ const styles = StyleSheet.create({
 
   image: {
     width: "100%",
-    height: 300,
+    height: 350,
   },
 
   content: {
     flex: 1,
     padding: 20,
   },
-  error: {
-    color: "red",
-    marginBottom: 10,
-  },
+
   title: {
     fontSize: 24,
     fontWeight: "700",
-    marginBottom: 20,
+    marginBottom: 25,
   },
 
   inputRow: {
@@ -97,6 +104,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
+    color: "#000",
   },
 
   divider: {
@@ -108,14 +116,12 @@ const styles = StyleSheet.create({
   orText: {
     textAlign: "center",
     color: "#999",
-    marginTop: 30,
     marginVertical: 20,
   },
 
   socialBtn: {
     padding: 16,
     borderRadius: 12,
-    marginTop: 15,
     marginBottom: 15,
     alignItems: "center",
   },
@@ -128,8 +134,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#4A66AC",
   },
 
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+
   socialText: {
     color: "#fff",
     fontWeight: "600",
+    marginLeft: 10,
   },
 });

@@ -4,7 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashScreen from "../screens/splash/SplashScreen.js";
 import OnboardingScreen from "../screens/onboarding/OnboardingScreen.js";
 import SignInScreen from "../screens/auth/SignInScreen.js";
-
+import EnterPhoneScreen from "../screens/auth/EnterPhoneScreen.js";
+import OTPScreen from "../screens/auth/OTPScreen.js";
+import SelectLocationScreen from "../screens/location/SelectLocation.js";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -14,6 +16,9 @@ export default function AppNavigator() {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="EnterPhone" component={EnterPhoneScreen} />
+        <Stack.Screen name="OTP" component={OTPScreen} />
+        <Stack.Screen name="Location" component={SelectLocationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
