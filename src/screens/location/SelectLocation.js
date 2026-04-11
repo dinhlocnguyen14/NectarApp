@@ -1,8 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 export default function SelectLocationScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backBtn}
+      >
+        <Ionicons name="chevron-back" size={28} color="#000" />
+      </TouchableOpacity>
+
       <Image
         source={require("../../../assets/images/location.png")}
         style={styles.image}
@@ -28,7 +38,10 @@ export default function SelectLocationScreen() {
         <Text style={styles.placeholder}>Types of your area ▼</Text>
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.replace("SignUp")}
+      >
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
@@ -47,7 +60,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
   },
-
+  backBtn: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
   title: {
     fontSize: 22,
     fontWeight: "700",

@@ -42,6 +42,7 @@ export default function OTPScreen() {
     }
 
     console.log("OTP:", finalCode);
+    navigation.replace("Location");
   };
 
   return (
