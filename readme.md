@@ -1,24 +1,27 @@
 # Nectar App (React Native - Expo)
 
-- Sinh viên thực hiện: Nguyễn Đình Lộc
-- Mã Sinh viên: 23810310244
+## 👨‍💻 Thông tin sinh viên
 
-## Giới thiệu
-
-Ứng dụng mobile mô phỏng app mua sắm (Nectar app) được xây dựng bằng **React Native + Expo**.
-App bao gồm đầy đủ các flow cơ bản:
-
-- Splash Screen
-- Onboarding
-- Authentication (Sign In / Sign Up / OTP)
-- Select Location
-- UI hiện đại, tối giản
+- **Họ tên:** Nguyễn Đình Lộc
+- **MSSV:** 23810310244
 
 ---
 
-## Hướng dẫn chạy app
+## 📌 Giới thiệu
 
-### Yêu cầu
+Nectar App là ứng dụng mobile mô phỏng hệ thống mua sắm hiện đại, được xây dựng bằng **React Native + Expo**.
+
+Ứng dụng tập trung vào:
+
+- Trải nghiệm người dùng mượt mà
+- Flow rõ ràng
+- Giao diện tối giản, hiện đại
+
+---
+
+## 🚀 Hướng dẫn chạy app
+
+### 🔧 Yêu cầu
 
 - Node.js >= 16
 - npm hoặc yarn
@@ -26,7 +29,7 @@ App bao gồm đầy đủ các flow cơ bản:
 
 ---
 
-### Cài đặt
+### 📥 Cài đặt
 
 ```bash
 git clone https://github.com/dinhlocnguyen14/NectarApp
@@ -36,58 +39,59 @@ npm install
 
 ---
 
-### Chạy app
+### ▶️ Chạy ứng dụng
 
 ```bash
 npx expo start
 ```
 
-Sau đó:
-
-- Nhấn `a` để chạy Android Emulator
-- Nhấn `w` để chạy trên Web
-- Hoặc quét QR bằng app **Expo Go** trên điện thoại
+- Nhấn `a` → Android
+- Nhấn `w` → Web
+- Hoặc dùng Expo Go quét QR
 
 ---
 
-## Ảnh demo
+## 📸 Demo giao diện
 
-### 🔹 Splash Screen
+### 🔹 Nhóm 1
 
-![Splash](./assets/demo/23810310244_Splash.jpg)
-
-### 🔹 Onboarding
-
-![Onboarding](./assets/demo/23810310244_Onboarding.jpg)
-
-### 🔹 Sign In
-
-![SignIn](./assets/demo/23810310244_SignIn.jpg)
-
-### 🔹 Number
-
-![OTP](./assets/demo/23810310244_Number.jpg)
-
-### 🔹 Verification
-
-![Verification](./assets/demo/23810310244_Verification.jpg)
-
-### 🔹 Location
-
-![Location](./assets/demo/23810310244_SelectLocation.jpg)
-
-### 🔹 Sign Up
-
-## ![SignIn](./assets/demo/23810310244_SignUp.jpg)
-
-## Video demo
-
-👉 Xem demo tại đây:
-https://drive.google.com/file/d/1mwzup4vmn_rhz2YdDUQQ0vVgIh5f6o-X/view?usp=sharing
+| Splash                                    | Onboarding                                    | Sign In                                   |
+| ----------------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| ![](./assets/demo/23810310244_Splash.jpg) | ![](./assets/demo/23810310244_Onboarding.jpg) | ![](./assets/demo/23810310244_SignIn.jpg) |
 
 ---
 
-## Công nghệ sử dụng
+### 🔹 Nhóm 2
+
+| Number                                    | Verification                                    | Location                                          |
+| ----------------------------------------- | ----------------------------------------------- | ------------------------------------------------- |
+| ![](./assets/demo/23810310244_Number.jpg) | ![](./assets/demo/23810310244_Verification.jpg) | ![](./assets/demo/23810310244_SelectLocation.jpg) |
+
+---
+
+### 🔹 Nhóm 3
+
+| Sign Up                                   | Home                                          | Explore                                    |
+| ----------------------------------------- | --------------------------------------------- | ------------------------------------------ |
+| ![](./assets/demo/23810310244_SignUp.jpg) | ![](./assets/demo/23810310244_HomeScreen.jpg) | ![](./assets/demo/23810310244_Explore.jpg) |
+
+---
+
+### 🔹 Nhóm 4
+
+| Product Detail                                    | Beverages                                     |     |
+| ------------------------------------------------- | --------------------------------------------- | --- |
+| ![](./assets/demo/23810310244_Product-Detail.jpg) | ![](./assets/demo/23810310244_Beeverages.jpg) |     |
+
+---
+
+## 🎬 Video demo
+
+https://drive.google.com/file/d/1mwzup4vmn_rhz2YdDUQQ0vVgIh5f6o-X/view
+
+---
+
+## 🛠️ Công nghệ sử dụng
 
 - React Native (Expo)
 - React Navigation
@@ -95,13 +99,18 @@ https://drive.google.com/file/d/1mwzup4vmn_rhz2YdDUQQ0vVgIh5f6o-X/view?usp=shari
 
 ---
 
-## Ghi chú
+## 📌 Ghi chú
 
 - Đây là project học tập / demo
-- Có thể mở rộng thêm:
+- Có thể mở rộng:
   - Firebase Authentication
   - Backend API
-  - Redux / Context
-  - Payment
+  - State Management
+  - Thanh toán
 
 ---
+
+## ⭐ Tổng kết
+
+Project đã hoàn thiện UI và flow cơ bản.  
+Có thể phát triển thêm để trở thành ứng dụng hoàn chỉnh.

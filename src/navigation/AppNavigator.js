@@ -9,6 +9,10 @@ import OTPScreen from "../screens/auth/OTPScreen.js";
 import SelectLocationScreen from "../screens/location/SelectLocation.js";
 import SignUpScreen from "../screens/auth/SignUpScreen.js";
 import LoginScreen from "../screens/auth/LogInScreen.js";
+import HomeScreen from "../screens/home/HomeScreen.js";
+import ProductDetailScreen from "../screens/product/ProductDetailScreen.js";
+import ExploreScreen from "../screens/explore/ExploreScreen.js";
+import BeveragesScreen from "../screens/explore/BeveragesScreen.js";
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -23,6 +27,10 @@ export default function AppNavigator() {
         <Stack.Screen name="Location" component={SelectLocationScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+        <Stack.Screen name="Explore" component={ExploreScreen} />
+        <Stack.Screen name="Beverages" component={BeveragesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
