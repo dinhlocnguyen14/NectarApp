@@ -57,7 +57,7 @@ npx expo start
 
 | Splash                                       | Onboarding                                       | Sign In                                      |
 | -------------------------------------------- | ------------------------------------------------ | -------------------------------------------- |
-| ![](./assets/demo/23810310244_01_splash.jpg) | ![](./assets/demo/23810310244_02_Onboarding.jpg) | ![](./assets/demo/23810310244_03_SignIn.jpg) |
+| ![](./assets/demo/23810310244_01_splash.jpg) | ![](./assets/demo/23810310244_02_OnBoarding.jpg) | ![](./assets/demo/23810310244_03_SignIn.jpg) |
 
 ---
 
