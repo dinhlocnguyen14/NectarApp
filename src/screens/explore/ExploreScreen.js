@@ -99,15 +99,17 @@ const ExploreScreen = ({ navigation }) => {
         <Text style={styles.title}>Find Products</Text>
 
         {/* Search */}
-        <View style={styles.searchContainer}>
+        <TouchableOpacity 
+          style={styles.searchContainer}
+          onPress={() => navigation.navigate("Search")}
+        >
           <Ionicons name="search" size={20} color="#999" />
           <TextInput
             style={styles.searchInput}
             placeholder="Search Store"
-            value={searchText}
-            onChangeText={setSearchText}
+            editable={false}
           />
-        </View>
+        </TouchableOpacity>
 
         {/* Categories */}
         <FlatList
@@ -121,36 +123,6 @@ const ExploreScreen = ({ navigation }) => {
 
         <View style={{ height: 80 }} />
       </ScrollView>
-
-      {/* Bottom nav */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <FontAwesome name="shopping-bag" size={24} color="#999" />
-          <Text style={styles.navText}>Shop</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="search" size={24} color="#53B175" />
-          <Text style={[styles.navText, { color: "#53B175" }]}>Explore</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="shopping-cart" size={24} color="#999" />
-          <Text style={styles.navText}>Cart</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="heart-o" size={24} color="#999" />
-          <Text style={styles.navText}>Favourites</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="user" size={24} color="#999" />
-          <Text style={styles.navText}>Account</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -198,16 +170,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
   },
-
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-    borderTopWidth: 1,
-    borderColor: "#eee",
-  },
-
-  navItem: { alignItems: "center" },
-
-  navText: { fontSize: 11, color: "#999" },
 });

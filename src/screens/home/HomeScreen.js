@@ -31,7 +31,10 @@ const HomeScreen = () => {
         </View>
 
         {/* Search Bar */}
-        <View style={styles.searchContainer}>
+        <TouchableOpacity
+          style={styles.searchContainer}
+          onPress={() => navigation.navigate("Search")}
+        >
           <Ionicons
             name="search"
             size={20}
@@ -42,10 +45,9 @@ const HomeScreen = () => {
             style={styles.searchInput}
             placeholder="Search Store"
             placeholderTextColor="#999"
-            value={searchText}
-            onChangeText={setSearchText}
+            editable={false}
           />
-        </View>
+        </TouchableOpacity>
 
         {/* Banner */}
         <View style={styles.bannerContainer}>
@@ -194,32 +196,6 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.productCard}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                product: {
-                  name: "Apple",
-                  weight: "300g",
-                  price: "$2.99",
-                  image: require("../../../assets/images/apple.png"),
-                },
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/images/apple.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Apple</Text>
-            <Text style={styles.productDescription}>300g, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$2.99</Text>
-              <TouchableOpacity style={styles.addButton}>
-                <Text style={styles.addButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
         </ScrollView>
 
         {/* Groceries Categories Section */}
@@ -286,54 +262,9 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.productCard}>
-            <Image
-              source={require("../../../assets/images/chicken.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Broiler Chicken</Text>
-            <Text style={styles.productDescription}>1kg, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$4.99</Text>
-              <TouchableOpacity style={styles.addButton}>
-                <Text style={styles.addButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
         </ScrollView>
         <View style={styles.spacer} />
       </ScrollView>
-
-      {/* Bottom Navigation Bar */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="shopping-bag" size={24} color="#53B175" />
-          <Text style={[styles.navText, styles.activeNav]}>Shop</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => navigation.navigate("Explore")}
-        >
-          <FontAwesome name="search" size={24} color="#999" />
-          <Text style={styles.navText}>Explore</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="shopping-cart" size={24} color="#999" />
-          <Text style={styles.navText}>Cart</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="heart-o" size={24} color="#999" />
-          <Text style={styles.navText}>Favourites</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome name="user" size={24} color="#999" />
-          <Text style={styles.navText}>Account</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -543,27 +474,6 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 20,
-  },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderTopWidth: 1,
-    borderTopColor: "#F0F0F0",
-    paddingVertical: 8,
-    backgroundColor: "#fff",
-  },
-  navItem: {
-    alignItems: "center",
-    gap: 4,
-    paddingVertical: 4,
-  },
-  navText: {
-    fontSize: 11,
-    color: "#999",
-  },
-  activeNav: {
-    color: "#53B175",
   },
 });
 
