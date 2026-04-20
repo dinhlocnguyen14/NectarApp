@@ -8,15 +8,27 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../../context/CartContext";
+import useStorage from "../../hooks/useStorage";
+import { ProductSkeleton } from "../../components/ProductSkeleton";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { addToCart } = useContext(CartContext);
   const [searchText, setSearchText] = useState("");
+  const { value: userEmail, loading: storageLoading } = useStorage("userEmail");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data fetching
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -29,7 +41,9 @@ const HomeScreen = () => {
         />
         <View style={styles.locationSection}>
           <Ionicons name="location" size={20} color="#53B175" />
-          <Text style={styles.locationText}>Dhaka, Banassre</Text>
+          <Text style={styles.locationText}>
+            {userEmail ? userEmail : "Dhaka, Banassre"}
+          </Text>
         </View>
 
         {/* Search Bar */}
@@ -73,79 +87,89 @@ const HomeScreen = () => {
           showsHorizontalScrollIndicator={false}
           style={styles.productScroll}
         >
-          {/* Product Card 1 */}
-          <TouchableOpacity
-            style={styles.productCard}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                product: {
-                  name: "Organic Bananas",
-                  weight: "7pcs",
-                  price: "$4.99",
-                  image: require("../../../assets/images/banana.png"),
-                },
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/images/banana.png")}
-              style={[styles.productImage]}
-            />
-            <Text style={styles.productName}>Organic Bananas</Text>
-            <Text style={styles.productDescription}>7pcs, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$4.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "banana_1",
-                  name: "Organic Bananas",
-                  description: "7pcs, Price",
-                  price: 4.99,
-                  image: require("../../../assets/images/banana.png"),
-                })}
+          {isLoading ? (
+            <>
+              <ProductSkeleton />
+              <ProductSkeleton />
+              <ProductSkeleton />
+            </>
+          ) : (
+            <>
+              {/* Product Card 1 */}
+              <TouchableOpacity
+                style={styles.productCard}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    product: {
+                      name: "Organic Bananas",
+                      weight: "7pcs",
+                      price: "$4.99",
+                      image: require("../../../assets/images/banana.png"),
+                    },
+                  })
+                }
               >
-                <Text style={styles.addButtonText}>+</Text>
+                <Image
+                  source={require("../../../assets/images/banana.png")}
+                  style={[styles.productImage]}
+                />
+                <Text style={styles.productName}>Organic Bananas</Text>
+                <Text style={styles.productDescription}>7pcs, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$4.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "banana_1",
+                      name: "Organic Bananas",
+                      description: "7pcs, Price",
+                      price: 4.99,
+                      image: require("../../../assets/images/banana.png"),
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
 
-          {/* Product Card 2 */}
-          <TouchableOpacity
-            style={styles.productCard}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                product: {
-                  name: "Red Apple",
-                  weight: "1kg",
-                  price: "$4.99",
-                  image: require("../../../assets/images/apple.png"),
-                },
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/images/apple.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Red Apple</Text>
-            <Text style={styles.productDescription}>1kg, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$4.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "apple_1",
-                  name: "Red Apple",
-                  description: "1kg, Price",
-                  price: 4.99,
-                  image: require("../../../assets/images/apple.png"),
-                })}
+              {/* Product Card 2 */}
+              <TouchableOpacity
+                style={styles.productCard}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    product: {
+                      name: "Red Apple",
+                      weight: "1kg",
+                      price: "$4.99",
+                      image: require("../../../assets/images/apple.png"),
+                    },
+                  })
+                }
               >
-                <Text style={styles.addButtonText}>+</Text>
+                <Image
+                  source={require("../../../assets/images/apple.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>Red Apple</Text>
+                <Text style={styles.productDescription}>1kg, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$4.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "apple_1",
+                      name: "Red Apple",
+                      description: "1kg, Price",
+                      price: 4.99,
+                      image: require("../../../assets/images/apple.png"),
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+            </>
+          )}
         </ScrollView>
 
         {/* Best Selling Section */}
@@ -161,79 +185,88 @@ const HomeScreen = () => {
           showsHorizontalScrollIndicator={false}
           style={styles.productScroll}
         >
-          {/* Product Card 3 */}
-          <TouchableOpacity
-            style={styles.productCard}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                product: {
-                  name: "Bell Pepper",
-                  weight: "1kg",
-                  price: "$3.99",
-                  image: require("../../../assets/images/banana.png"),
-                },
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/images/banana.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Bell Pepper</Text>
-            <Text style={styles.productDescription}>1kg, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$3.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "pepper_1",
-                  name: "Bell Pepper",
-                  description: "1kg, Price",
-                  price: 3.99,
-                  image: require("../../../assets/images/banana.png"), // Assuming this is correct from original code
-                })}
+          {isLoading ? (
+            <>
+              <ProductSkeleton />
+              <ProductSkeleton />
+            </>
+          ) : (
+            <>
+              {/* Product Card 3 */}
+              <TouchableOpacity
+                style={styles.productCard}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    product: {
+                      name: "Bell Pepper",
+                      weight: "1kg",
+                      price: "$3.99",
+                      image: require("../../../assets/images/banana.png"),
+                    },
+                  })
+                }
               >
-                <Text style={styles.addButtonText}>+</Text>
+                <Image
+                  source={require("../../../assets/images/banana.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>Bell Pepper</Text>
+                <Text style={styles.productDescription}>1kg, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$3.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "pepper_1",
+                      name: "Bell Pepper",
+                      description: "1kg, Price",
+                      price: 3.99,
+                      image: require("../../../assets/images/banana.png"), // Assuming this is correct from original code
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
 
-          {/* Product Card 4 */}
-          <TouchableOpacity
-            style={styles.productCard}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                product: {
-                  name: "Spinach",
-                  weight: "300g",
-                  price: "$2.99",
-                  image: require("../../../assets/images/apple.png"),
-                },
-              })
-            }
-          >
-            <Image
-              source={require("../../../assets/images/apple.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Spinach</Text>
-            <Text style={styles.productDescription}>300g, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$2.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "spinach_1",
-                  name: "Spinach",
-                  description: "300g, Price",
-                  price: 2.99,
-                  image: require("../../../assets/images/apple.png"), // Assuming this is correct from original code
-                })}
+              {/* Product Card 4 */}
+              <TouchableOpacity
+                style={styles.productCard}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    product: {
+                      name: "Spinach",
+                      weight: "300g",
+                      price: "$2.99",
+                      image: require("../../../assets/images/apple.png"),
+                    },
+                  })
+                }
               >
-                <Text style={styles.addButtonText}>+</Text>
+                <Image
+                  source={require("../../../assets/images/apple.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>Spinach</Text>
+                <Text style={styles.productDescription}>300g, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$2.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "spinach_1",
+                      name: "Spinach",
+                      description: "300g, Price",
+                      price: 2.99,
+                      image: require("../../../assets/images/apple.png"), // Assuming this is correct from original code
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+            </>
+          )}
         </ScrollView>
 
         {/* Groceries Categories Section */}
@@ -269,61 +302,71 @@ const HomeScreen = () => {
           showsHorizontalScrollIndicator={false}
           style={styles.productScroll}
         >
-          {/* Groceries Product 1 */}
-          <View style={styles.productCard}>
-            <Image
-              source={require("../../../assets/images/beef.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Beef Bone</Text>
-            <Text style={styles.productDescription}>1kg, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$4.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "beef_1",
-                  name: "Beef Bone",
-                  description: "1kg, Price",
-                  price: 4.99,
-                  image: require("../../../assets/images/beef.png"),
-                })}
-              >
-                <Text style={styles.addButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          {isLoading ? (
+            <>
+              <ProductSkeleton />
+              <ProductSkeleton />
+            </>
+          ) : (
+            <>
+              {/* Groceries Product 1 */}
+              <View style={styles.productCard}>
+                <Image
+                  source={require("../../../assets/images/beef.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>Beef Bone</Text>
+                <Text style={styles.productDescription}>1kg, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$4.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "beef_1",
+                      name: "Beef Bone",
+                      description: "1kg, Price",
+                      price: 4.99,
+                      image: require("../../../assets/images/beef.png"),
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
 
-          {/* Groceries Product 2 */}
-          <View style={styles.productCard}>
-            <Image
-              source={require("../../../assets/images/chicken.png")}
-              style={styles.productImage}
-            />
-            <Text style={styles.productName}>Broiler Chicken</Text>
-            <Text style={styles.productDescription}>1kg, Priceg</Text>
-            <View style={styles.productFooter}>
-              <Text style={styles.productPrice}>$4.99</Text>
-              <TouchableOpacity 
-                style={styles.addButton}
-                onPress={() => addToCart({
-                  id: "chicken_1",
-                  name: "Broiler Chicken",
-                  description: "1kg, Price",
-                  price: 4.99,
-                  image: require("../../../assets/images/chicken.png"),
-                })}
-              >
-                <Text style={styles.addButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+              {/* Groceries Product 2 */}
+              <View style={styles.productCard}>
+                <Image
+                  source={require("../../../assets/images/chicken.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>Broiler Chicken</Text>
+                <Text style={styles.productDescription}>1kg, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$4.99</Text>
+                  <TouchableOpacity 
+                    style={styles.addButton}
+                    onPress={() => addToCart({
+                      id: "chicken_1",
+                      name: "Broiler Chicken",
+                      description: "1kg, Price",
+                      price: 4.99,
+                      image: require("../../../assets/images/chicken.png"),
+                    })}
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </>
+          )}
         </ScrollView>
         <View style={styles.spacer} />
       </ScrollView>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

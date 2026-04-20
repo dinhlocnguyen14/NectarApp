@@ -7,8 +7,27 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import storageService from "../../services/storageService";
+
 export default function SignUpScreen() {
   const navigation = useNavigation();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = async () => {
+    try {
+      const EXPIRE_IN = 24 * 60 * 60 * 1000; // 24 hours
+      await storageService.save("userName", username, EXPIRE_IN);
+      await storageService.save("userEmail", email, EXPIRE_IN);
+      await storageService.save("userToken", "dummy-auth-token", EXPIRE_IN);
+      navigation.replace("Home");
+    } catch (e) {
+      console.error("Failed to sign up", e);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -20,9 +39,27 @@ export default function SignUpScreen() {
       <Text style={styles.title}>Sign Up</Text>
       <Text style={styles.subtitle}>Enter your credentials to continue</Text>
 
-      <TextInput placeholder="Username" style={styles.input} />
-      <TextInput placeholder="Email" style={styles.input} />
-      <TextInput placeholder="Password" style={styles.input} secureTextEntry />
+      <TextInput
+        placeholder="Username"
+        style={styles.input}
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="Password"
+        style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
 
       <Text style={styles.policy}>
         By continuing you agree to our{" "}
@@ -32,7 +69,7 @@ export default function SignUpScreen() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.replace("Login")}
+        onPress={handleSignUp}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>

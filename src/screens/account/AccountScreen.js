@@ -7,16 +7,17 @@ import { Ionicons } from "@expo/vector-icons";
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
         const savedEmail = await storageService.get("userEmail");
-        if (savedEmail) {
-          setEmail(savedEmail);
-        }
+        const savedName = await storageService.get("userName");
+        if (savedEmail) setEmail(savedEmail);
+        if (savedName) setName(savedName);
       } catch (error) {
-        console.error("Failed to load user email", error);
+        console.error("Failed to load user data", error);
       }
     };
     loadUserData();
@@ -26,6 +27,7 @@ const AccountScreen = () => {
     try {
       await storageService.remove("userToken");
       await storageService.remove("userEmail");
+      await storageService.remove("userName");
       navigation.reset({
         index: 0,
         routes: [{ name: "Login" }],
@@ -53,7 +55,7 @@ const AccountScreen = () => {
           style={styles.avatar}
         />
         <View>
-          <Text style={styles.name}>User Name</Text>
+          <Text style={styles.name}>{name || "User Name"}</Text>
           <Text style={styles.email}>{email || "No email"}</Text>
         </View>
       </View>

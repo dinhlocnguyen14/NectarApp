@@ -15,8 +15,9 @@ export default function LoginScreen() {
  
   const handleLogin = async () => {
     try {
-      await storageService.save("userToken", "dummy-auth-token");
-      await storageService.save("userEmail", email);
+      const EXPIRE_IN = 24 * 60 * 60 * 1000; // 24 hours
+      await storageService.save("userToken", "dummy-auth-token", EXPIRE_IN);
+      await storageService.save("userEmail", email, EXPIRE_IN);
       navigation.navigate("Home");
     } catch (e) {
       console.error("Failed to save token", e);
