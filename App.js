@@ -1,12 +1,13 @@
 import { useState } from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
 import TextSplash from "./src/components/TextSplash";
+import { CartProvider } from "./src/context/CartContext";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   return (
-    <>
+    <CartProvider>
       <AppNavigator />
 
       {showSplash && (
@@ -16,6 +17,6 @@ export default function App() {
           onFinish={() => setShowSplash(false)}
         />
       )}
-    </>
+    </CartProvider>
   );
 }
