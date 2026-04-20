@@ -41,9 +41,7 @@ const HomeScreen = () => {
         />
         <View style={styles.locationSection}>
           <Ionicons name="location" size={20} color="#53B175" />
-          <Text style={styles.locationText}>
-            {userEmail ? userEmail : "Dhaka, Banassre"}
-          </Text>
+          <Text style={styles.locationText}>Dhaka, Banassre</Text>
         </View>
 
         {/* Search Bar */}
@@ -117,15 +115,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>7pcs, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$4.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "banana_1",
-                      name: "Organic Bananas",
-                      description: "7pcs, Price",
-                      price: 4.99,
-                      image: require("../../../assets/images/banana.png"),
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "banana_1",
+                        name: "Organic Bananas",
+                        description: "7pcs, Price",
+                        price: 4.99,
+                        image: require("../../../assets/images/banana.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -154,15 +154,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>1kg, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$4.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "apple_1",
-                      name: "Red Apple",
-                      description: "1kg, Price",
-                      price: 4.99,
-                      image: require("../../../assets/images/apple.png"),
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "apple_1",
+                        name: "Red Apple",
+                        description: "1kg, Price",
+                        price: 4.99,
+                        image: require("../../../assets/images/apple.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -214,15 +216,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>1kg, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$3.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "pepper_1",
-                      name: "Bell Pepper",
-                      description: "1kg, Price",
-                      price: 3.99,
-                      image: require("../../../assets/images/banana.png"), // Assuming this is correct from original code
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "pepper_1",
+                        name: "Bell Pepper",
+                        description: "1kg, Price",
+                        price: 3.99,
+                        image: require("../../../assets/images/banana.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -251,15 +255,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>300g, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$2.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "spinach_1",
-                      name: "Spinach",
-                      description: "300g, Price",
-                      price: 2.99,
-                      image: require("../../../assets/images/apple.png"), // Assuming this is correct from original code
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "spinach_1",
+                        name: "Spinach",
+                        description: "300g, Price",
+                        price: 2.99,
+                        image: require("../../../assets/images/apple.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -319,15 +325,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>1kg, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$4.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "beef_1",
-                      name: "Beef Bone",
-                      description: "1kg, Price",
-                      price: 4.99,
-                      image: require("../../../assets/images/beef.png"),
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "beef_1",
+                        name: "Beef Bone",
+                        description: "1kg, Price",
+                        price: 4.99,
+                        image: require("../../../assets/images/beef.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -344,15 +352,17 @@ const HomeScreen = () => {
                 <Text style={styles.productDescription}>1kg, Priceg</Text>
                 <View style={styles.productFooter}>
                   <Text style={styles.productPrice}>$4.99</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.addButton}
-                    onPress={() => addToCart({
-                      id: "chicken_1",
-                      name: "Broiler Chicken",
-                      description: "1kg, Price",
-                      price: 4.99,
-                      image: require("../../../assets/images/chicken.png"),
-                    })}
+                    onPress={() =>
+                      addToCart({
+                        id: "chicken_1",
+                        name: "Broiler Chicken",
+                        description: "1kg, Price",
+                        price: 4.99,
+                        image: require("../../../assets/images/chicken.png"),
+                      })
+                    }
                   >
                     <Text style={styles.addButtonText}>+</Text>
                   </TouchableOpacity>
@@ -366,7 +376,6 @@ const HomeScreen = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

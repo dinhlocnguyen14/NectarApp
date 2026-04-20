@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 import storageService from "../../services/storageService";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -50,10 +57,7 @@ const AccountScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={{ uri: "https://via.placeholder.com/100" }}
-          style={styles.avatar}
-        />
+        <Ionicons name="person-circle-outline" size={50} color={"black"} />
         <View>
           <Text style={styles.name}>{name || "User Name"}</Text>
           <Text style={styles.email}>{email || "No email"}</Text>
@@ -61,10 +65,10 @@ const AccountScreen = () => {
       </View>
 
       <ScrollView style={styles.menuContainer}>
-        <AccountItem 
-          icon="receipt-outline" 
-          title="Orders" 
-          onPress={() => navigation.navigate("Orders")} 
+        <AccountItem
+          icon="receipt-outline"
+          title="Orders"
+          onPress={() => navigation.navigate("Orders")}
         />
         <AccountItem icon="card-outline" title="Payment Methods" />
         <AccountItem icon="location-outline" title="Delivery Address" />

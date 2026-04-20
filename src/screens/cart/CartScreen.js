@@ -7,37 +7,36 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Modal,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CartContext } from "../../context/CartContext";
 import { OrderContext } from "../../context/OrderContext";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 const CartScreen = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
   const { addOrder } = useContext(OrderContext);
   const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const totalPrice = cartItems
     .reduce((sum, item) => sum + item.price * item.quantity, 0)
     .toFixed(2);
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (cartItems.length === 0) return;
+    setModalVisible(true);
+  };
 
+  const handlePlaceOrder = async () => {
+    setModalVisible(false);
     try {
       await addOrder(cartItems, totalPrice);
       await clearCart();
-      Alert.alert(
-        "Success",
-        "Your order has been placed successfully!",
-        [
-          {
-            text: "OK",
-            onPress: () => navigation.navigate("Orders"),
-          },
-        ]
-      );
+      navigation.navigate("OrderSuccess");
     } catch (error) {
       Alert.alert("Error", "Failed to place order. Please try again.");
     }
@@ -106,6 +105,73 @@ const CartScreen = () => {
           </View>
         </TouchableOpacity>
       )}
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Checkout</Text>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Ionicons name="close" size={24} color="#181725" />
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView>
+              <TouchableOpacity style={styles.modalRow}>
+                <Text style={styles.modalRowLabel}>Delivery</Text>
+                <View style={styles.modalRowRight}>
+                  <Text style={styles.modalRowValue}>Select Method</Text>
+                  <Ionicons name="chevron-forward" size={20} color="#181725" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.modalRow}>
+                <Text style={styles.modalRowLabel}>Payment</Text>
+                <View style={styles.modalRowRight}>
+                  <View style={styles.mastercardLogo}>
+                    <View style={styles.mcCircleRed} />
+                    <View style={styles.mcCircleYellow} />
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color="#181725" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.modalRow}>
+                <Text style={styles.modalRowLabel}>Promo Code</Text>
+                <View style={styles.modalRowRight}>
+                  <Text style={styles.modalRowValue}>Pick discount</Text>
+                  <Ionicons name="chevron-forward" size={20} color="#181725" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.modalRow}>
+                <Text style={styles.modalRowLabel}>Total Cost</Text>
+                <View style={styles.modalRowRight}>
+                  <Text style={styles.modalRowValue}>${totalPrice}</Text>
+                  <Ionicons name="chevron-forward" size={20} color="#181725" />
+                </View>
+              </TouchableOpacity>
+
+              <View style={styles.termsContainer}>
+                <Text style={styles.termsText}>
+                  By placing an order you agree to our{" "}
+                  <Text style={styles.termsHighlight}>Terms</Text> And{" "}
+                  <Text style={styles.termsHighlight}>Conditions</Text>
+                </Text>
+              </View>
+
+              <TouchableOpacity style={styles.placeOrderButton} onPress={handlePlaceOrder}>
+                <Text style={styles.placeOrderText}>Place Order</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -224,6 +290,101 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#7C7C7C",
     fontWeight: "500",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 25,
+    maxHeight: "80%",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E2E2E2",
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#181725",
+  },
+  modalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E2E2E2",
+  },
+  modalRowLabel: {
+    fontSize: 18,
+    color: "#7C7C7C",
+    fontWeight: "500",
+  },
+  modalRowRight: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  modalRowValue: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#181725",
+    marginRight: 10,
+  },
+  termsContainer: {
+    marginVertical: 20,
+  },
+  termsText: {
+    fontSize: 14,
+    color: "#7C7C7C",
+    lineHeight: 20,
+  },
+  termsHighlight: {
+    color: "#181725",
+    fontWeight: "600",
+  },
+  placeOrderButton: {
+    backgroundColor: "#53B175",
+    height: 67,
+    borderRadius: 19,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  placeOrderText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  mastercardLogo: {
+    flexDirection: "row",
+    marginRight: 10,
+    alignItems: "center",
+  },
+  mcCircleRed: {
+    width: 15,
+    height: 15,
+    borderRadius: 7.5,
+    backgroundColor: "#EB001B",
+    opacity: 0.8,
+  },
+  mcCircleYellow: {
+    width: 15,
+    height: 15,
+    borderRadius: 7.5,
+    backgroundColor: "#F79E1B",
+    marginLeft: -8,
+    opacity: 0.8,
   },
 });
 
