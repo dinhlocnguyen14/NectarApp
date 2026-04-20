@@ -12,18 +12,26 @@ export const CartProvider = ({ children }) => {
 
   const loadCart = async () => {
     try {
-      const savedCart = await storageService.getCart();
+      const userEmail = await storageService.get("userEmail");
+      const savedCart = await storageService.getCart(userEmail || "");
       if (savedCart) {
         setCartItems(savedCart);
+      } else {
+        setCartItems([]);
       }
     } catch (error) {
       console.error("Failed to load cart", error);
     }
   };
 
+  const refreshCart = async () => {
+    await loadCart();
+  };
+
   const saveCart = async (items) => {
     try {
-      await storageService.saveCart(items);
+      const userEmail = await storageService.get("userEmail");
+      await storageService.saveCart(items, userEmail || "");
     } catch (error) {
       console.error("Failed to save cart", error);
     }
@@ -79,15 +87,20 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     try {
       setCartItems([]);
-      await storageService.clearCart();
+      const userEmail = await storageService.get("userEmail");
+      await storageService.clearCart(userEmail || "");
     } catch (error) {
       console.error("Failed to clear cart", error);
     }
   };
 
+  const resetCart = () => {
+    setCartItems([]);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}
+      value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, refreshCart, resetCart }}
     >
       {children}
     </CartContext.Provider>

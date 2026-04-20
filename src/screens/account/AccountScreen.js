@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+import { OrderContext } from "../../context/OrderContext";
 import {
   View,
   Text,
@@ -30,11 +32,19 @@ const AccountScreen = () => {
     loadUserData();
   }, []);
 
+  const { resetCart } = useContext(CartContext);
+  const { clearOrders } = useContext(OrderContext);
+
   const handleLogout = async () => {
     try {
       await storageService.remove("userToken");
       await storageService.remove("userEmail");
       await storageService.remove("userName");
+      
+      // Clear contexts
+      resetCart();
+      clearOrders();
+      
       navigation.reset({
         index: 0,
         routes: [{ name: "Login" }],

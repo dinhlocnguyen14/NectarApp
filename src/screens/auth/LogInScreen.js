@@ -8,16 +8,34 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import storageService from "../../services/storageService";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+import { OrderContext } from "../../context/OrderContext";
+
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
- 
+  const [password, setPassword] = useState("");
+  const { refreshCart } = useContext(CartContext);
+  const { refreshOrders } = useContext(OrderContext);
+
   const handleLogin = async () => {
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
     try {
       const EXPIRE_IN = 24 * 60 * 60 * 1000; // 24 hours
+      const derivedName = email.split("@")[0];
+      
       await storageService.save("userToken", "dummy-auth-token", EXPIRE_IN);
       await storageService.save("userEmail", email, EXPIRE_IN);
+      await storageService.save("userName", derivedName, EXPIRE_IN);
+      
+      // Refresh contexts with new user data
+      await refreshCart();
+      await refreshOrders();
+      
       navigation.navigate("Home");
     } catch (e) {
       console.error("Failed to save token", e);
@@ -33,7 +51,7 @@ export default function LoginScreen() {
       />
 
       <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>Enter your emails and password</Text>
+      <Text style={styles.subtitle}>Enter your email and password</Text>
 
       <TextInput
         placeholder="Email"
@@ -43,7 +61,13 @@ export default function LoginScreen() {
         autoCapitalize="none"
         keyboardType="email-address"
       />
-      <TextInput placeholder="Password" style={styles.input} secureTextEntry />
+      <TextInput
+        placeholder="Password"
+        style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
 
       <Text style={styles.forgot}>Forgot Password?</Text>
 

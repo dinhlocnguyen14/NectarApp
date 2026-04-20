@@ -23,7 +23,7 @@ export default function SplashScreen() {
 
     const timer = setTimeout(() => {
       checkLoginStatus();
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);

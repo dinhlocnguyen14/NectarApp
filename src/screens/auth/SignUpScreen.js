@@ -21,8 +21,8 @@ export default function SignUpScreen() {
       const EXPIRE_IN = 24 * 60 * 60 * 1000; // 24 hours
       await storageService.save("userName", username, EXPIRE_IN);
       await storageService.save("userEmail", email, EXPIRE_IN);
-      await storageService.save("userToken", "dummy-auth-token", EXPIRE_IN);
-      navigation.replace("Home");
+      // No token save here, so they have to login
+      navigation.replace("Login");
     } catch (e) {
       console.error("Failed to sign up", e);
     }

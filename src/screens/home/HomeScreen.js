@@ -170,6 +170,44 @@ const HomeScreen = () => {
                   </TouchableOpacity>
                 </View>
               </TouchableOpacity>
+              {/* Product Card 2 */}
+              <TouchableOpacity
+                style={styles.productCard}
+                onPress={() =>
+                  navigation.navigate("ProductDetail", {
+                    product: {
+                      name: "Red Apple",
+                      weight: "1kg",
+                      price: "$4.99",
+                      image: require("../../../assets/images/apple.png"),
+                    },
+                  })
+                }
+              >
+                <Image
+                  source={require("../../../assets/images/coca.png")}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>CoCa</Text>
+                <Text style={styles.productDescription}>1L, Priceg</Text>
+                <View style={styles.productFooter}>
+                  <Text style={styles.productPrice}>$4.99</Text>
+                  <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() =>
+                      addToCart({
+                        id: "coca_1",
+                        name: "CoCa",
+                        description: "1L, Price",
+                        price: 4.99,
+                        image: require("../../../assets/images/coca.png"),
+                      })
+                    }
+                  >
+                    <Text style={styles.addButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
             </>
           )}
         </ScrollView>

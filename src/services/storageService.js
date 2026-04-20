@@ -115,16 +115,19 @@ const storageService = {
   },
 
   // Helper methods for specific data types
-  saveCart: async (cartItems) => {
-    await storageService.save(KEYS.CART, cartItems);
+  saveCart: async (cartItems, userEmail = "") => {
+    const key = userEmail ? `${KEYS.CART}_${userEmail}` : KEYS.CART;
+    await storageService.save(key, cartItems);
   },
 
-  getCart: async () => {
-    return await storageService.get(KEYS.CART);
+  getCart: async (userEmail = "") => {
+    const key = userEmail ? `${KEYS.CART}_${userEmail}` : KEYS.CART;
+    return await storageService.get(key);
   },
 
-  clearCart: async () => {
-    await storageService.remove(KEYS.CART);
+  clearCart: async (userEmail = "") => {
+    const key = userEmail ? `${KEYS.CART}_${userEmail}` : KEYS.CART;
+    await storageService.remove(key);
   },
 
   saveOrders: async (orders) => {
