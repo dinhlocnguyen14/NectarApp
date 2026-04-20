@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import storageService from "../services/storageService";
 
 export const CartContext = createContext();
 
@@ -12,9 +12,9 @@ export const CartProvider = ({ children }) => {
 
   const loadCart = async () => {
     try {
-      const savedCart = await AsyncStorage.getItem("cart");
+      const savedCart = await storageService.getCart();
       if (savedCart) {
-        setCartItems(JSON.parse(savedCart));
+        setCartItems(savedCart);
       }
     } catch (error) {
       console.error("Failed to load cart", error);
@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
 
   const saveCart = async (items) => {
     try {
-      await AsyncStorage.setItem("cart", JSON.stringify(items));
+      await storageService.saveCart(items);
     } catch (error) {
       console.error("Failed to save cart", error);
     }
@@ -77,8 +77,12 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = async () => {
-    setCartItems([]);
-    await AsyncStorage.removeItem("cart");
+    try {
+      setCartItems([]);
+      await storageService.clearCart();
+    } catch (error) {
+      console.error("Failed to clear cart", error);
+    }
   };
 
   return (

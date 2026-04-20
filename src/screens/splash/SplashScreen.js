@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet } from "react-native";
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import storageService from "../../services/storageService";
 
 export default function SplashScreen() {
   const navigation = useNavigation();
@@ -9,13 +9,14 @@ export default function SplashScreen() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const token = await AsyncStorage.getItem("userToken");
+        const token = await storageService.get("userToken");
         if (token) {
           navigation.replace("Home");
         } else {
           navigation.replace("Onboarding");
         }
       } catch (error) {
+        console.error("Splash check error:", error);
         navigation.replace("Onboarding");
       }
     };

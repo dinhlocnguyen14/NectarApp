@@ -6,16 +6,42 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CartContext } from "../../context/CartContext";
+import { OrderContext } from "../../context/OrderContext";
+import { useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
-  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
+  const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
+  const { addOrder } = useContext(OrderContext);
+  const navigation = useNavigation();
 
   const totalPrice = cartItems
     .reduce((sum, item) => sum + item.price * item.quantity, 0)
     .toFixed(2);
+
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) return;
+
+    try {
+      await addOrder(cartItems, totalPrice);
+      await clearCart();
+      Alert.alert(
+        "Success",
+        "Your order has been placed successfully!",
+        [
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("Orders"),
+          },
+        ]
+      );
+    } catch (error) {
+      Alert.alert("Error", "Failed to place order. Please try again.");
+    }
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.cartItem}>
@@ -73,7 +99,7 @@ const CartScreen = () => {
       )}
 
       {cartItems.length > 0 && (
-        <TouchableOpacity style={styles.checkoutButton}>
+        <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
           <Text style={styles.checkoutText}>Go to Checkout</Text>
           <View style={styles.priceTag}>
             <Text style={styles.priceTagText}>${totalPrice}</Text>

@@ -7,11 +7,21 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import storageService from "../../services/storageService";
 import { useState } from "react";
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
+ 
+  const handleLogin = async () => {
+    try {
+      await storageService.save("userToken", "dummy-auth-token");
+      await storageService.save("userEmail", email);
+      navigation.navigate("Home");
+    } catch (e) {
+      console.error("Failed to save token", e);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -38,15 +48,7 @@ export default function LoginScreen() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={async () => {
-          try {
-            await AsyncStorage.setItem("userToken", "dummy-auth-token");
-            await AsyncStorage.setItem("userEmail", email);
-            navigation.navigate("Home");
-          } catch (e) {
-            console.error("Failed to save token", e);
-          }
-        }}
+        onPress={handleLogin}
       >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>

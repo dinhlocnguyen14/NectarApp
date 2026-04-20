@@ -13,6 +13,7 @@ import ProductDetailScreen from "../screens/product/ProductDetailScreen.js";
 import SearchScreen from "../screens/explore/SearchScreen.js";
 import FilterScreen from "../screens/explore/FilterScreen.js";
 import BeveragesScreen from "../screens/explore/BeveragesScreen.js";
+import OrdersScreen from "../screens/account/OrdersScreen.js";
 import TabNavigator from "./TabNavigator.js";
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ export default function AppNavigator() {
         <Stack.Screen name="Beverages" component={BeveragesScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Filter" component={FilterScreen} />
+        <Stack.Screen name="Orders" component={OrdersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
