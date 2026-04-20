@@ -7,8 +7,12 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+
   return (
     <View style={styles.container}>
       <Image
@@ -20,14 +24,29 @@ export default function LoginScreen() {
       <Text style={styles.title}>Login</Text>
       <Text style={styles.subtitle}>Enter your emails and password</Text>
 
-      <TextInput placeholder="Email" style={styles.input} />
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
       <TextInput placeholder="Password" style={styles.input} secureTextEntry />
 
       <Text style={styles.forgot}>Forgot Password?</Text>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Home")}
+        onPress={async () => {
+          try {
+            await AsyncStorage.setItem("userToken", "dummy-auth-token");
+            await AsyncStorage.setItem("userEmail", email);
+            navigation.navigate("Home");
+          } catch (e) {
+            console.error("Failed to save token", e);
+          }
+        }}
       >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>

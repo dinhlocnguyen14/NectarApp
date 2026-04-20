@@ -6,12 +6,15 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { CartContext } from "../../context/CartContext";
 
 const ProductDetailScreen = ({ navigation, route }) => {
+  const { addToCart } = useContext(CartContext);
   const { product } = route.params || {
     product: {
+      id: "apple_default",
       name: "Natural Red Apple",
       weight: "1kg",
       price: "$4.99",
@@ -28,6 +31,11 @@ const ProductDetailScreen = ({ navigation, route }) => {
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
     if (quantity > 1) setQuantity(quantity - 1);
+  };
+
+  const onAddToBasket = () => {
+    addToCart(product, quantity);
+    navigation.navigate("Home"); // Navigate to Home which contains the TabNavigator, or directly to Cart
   };
 
   return (
@@ -105,7 +113,6 @@ const ProductDetailScreen = ({ navigation, route }) => {
           {showDetailSection && (
             <Text style={styles.detailDescription}>
               {product.description}
-              abcdefghijklmnopqrstuvwxyz
             </Text>
           )}
 
@@ -137,7 +144,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
         </View>
       </ScrollView>
       {/* Add To Basket Button */}
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity style={styles.addButton} onPress={onAddToBasket}>
         <Text style={styles.addButtonText}>Add To Basket</Text>
       </TouchableOpacity>
     </View>

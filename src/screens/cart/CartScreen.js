@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,56 +8,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
-const initialCart = [
-  {
-    id: "1",
-    name: "Bell Pepper Red",
-    description: "1kg, Price",
-    price: 4.99,
-    quantity: 1,
-    image: require("../../../assets/images/Pepper.png"),
-  },
-  {
-    id: "2",
-    name: "Egg Chicken Red",
-    description: "4pcs, Price",
-    price: 1.99,
-    quantity: 1,
-    image: require("../../../assets/images/EggChickenRed.png"),
-  },
-  {
-    id: "3",
-    name: "Organic Bananas",
-    description: "12kg, Price",
-    price: 3.0,
-    quantity: 1,
-    image: require("../../../assets/images/banana.png"),
-  },
-  {
-    id: "4",
-    name: "Ginger",
-    description: "250gm, Price",
-    price: 2.99,
-    quantity: 1,
-    image: require("../../../assets/images/Ginger.png"),
-  },
-];
+import { CartContext } from "../../context/CartContext";
 
 const CartScreen = () => {
-  const [cart, setCart] = useState(initialCart);
+  const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  const updateQuantity = (id, delta) => {
-    setCart(cart.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-    ));
-  };
-
-  const removeItem = (id) => {
-    setCart(cart.filter(item => item.id !== id));
-  };
-
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
+  const totalPrice = cartItems
+    .reduce((sum, item) => sum + item.price * item.quantity, 0)
+    .toFixed(2);
 
   const renderItem = ({ item }) => (
     <View style={styles.cartItem}>
@@ -65,7 +23,7 @@ const CartScreen = () => {
       <View style={styles.itemDetails}>
         <View style={styles.itemHeader}>
           <Text style={styles.itemName}>{item.name}</Text>
-          <TouchableOpacity onPress={() => removeItem(item.id)}>
+          <TouchableOpacity onPress={() => removeFromCart(item.id)}>
             <Ionicons name="close" size={20} color="#7C7C7C" />
           </TouchableOpacity>
         </View>
@@ -86,7 +44,9 @@ const CartScreen = () => {
               <Ionicons name="add" size={20} color="#53B175" />
             </TouchableOpacity>
           </View>
-          <Text style={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</Text>
+          <Text style={styles.itemPrice}>
+            ${(item.price * item.quantity).toFixed(2)}
+          </Text>
         </View>
       </View>
     </View>
@@ -98,20 +58,28 @@ const CartScreen = () => {
         <Text style={styles.headerTitle}>My Cart</Text>
       </View>
 
-      <FlatList
-        data={cart}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-      />
-
-      <TouchableOpacity style={styles.checkoutButton}>
-        <Text style={styles.checkoutText}>Go to Checkout</Text>
-        <View style={styles.priceTag}>
-          <Text style={styles.priceTagText}>${totalPrice}</Text>
+      {cartItems.length === 0 ? (
+        <View style={styles.emptyCart}>
+          <Text style={styles.emptyText}>Your cart is empty</Text>
         </View>
-      </TouchableOpacity>
+      ) : (
+        <FlatList
+          data={cartItems}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContent}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+      )}
+
+      {cartItems.length > 0 && (
+        <TouchableOpacity style={styles.checkoutButton}>
+          <Text style={styles.checkoutText}>Go to Checkout</Text>
+          <View style={styles.priceTag}>
+            <Text style={styles.priceTagText}>${totalPrice}</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -220,6 +188,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
     fontWeight: "600",
+  },
+  emptyCart: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: 18,
+    color: "#7C7C7C",
+    fontWeight: "500",
   },
 });
 
